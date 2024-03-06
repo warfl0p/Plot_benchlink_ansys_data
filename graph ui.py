@@ -11,8 +11,8 @@ from sklearn.linear_model import LinearRegression
 # import seaborn as sns
 
 main_window = Tk()
-photo = PhotoImage(file = "simulatie\icon.png")
-main_window.iconphoto(False, photo)
+# photo = PhotoImage(file = "simulatie\icon.png")
+# main_window.iconphoto(False, photo)
 main_frame1 = Frame(main_window)
 main_frame1.grid(row=0, column=0, padx=10, pady=1, sticky="NW")
 main_frame2 = Frame(main_window)
