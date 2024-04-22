@@ -6,8 +6,8 @@ from tkinter import filedialog as fd
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.optimize import curve_fit
-from sklearn.linear_model import LinearRegression
+# from scipy.optimize import curve_fit
+# from sklearn.linear_model import LinearRegression
 # import seaborn as sns
 
 main_window = Tk()
@@ -156,9 +156,9 @@ def retrieve_values(dataType):
     return legendvalslist
 
 def readLogData(csvfile, encodetype):
-    df = pd.read_csv(csvfile, usecols=[0], encoding=encodetype)
+    df = pd.read_csv(csvfile, usecols=[0], encoding=encodetype, delimiter=';')
     rowsToSkip = df.loc[df[df.columns[0]] == "Scan"].index[0] + 1
-    df = pd.read_csv(csvfile, skiprows=rowsToSkip, encoding=encodetype)
+    df = pd.read_csv(csvfile, skiprows=rowsToSkip, encoding=encodetype, delimiter=';')
     return df
 
 def dropAlarmCols(df):
@@ -181,7 +181,7 @@ def dropAlarmCols(df):
 
 def formatTimecol(df):
     df.insert(2, "Time_seconds", None)  # voegt colomn looptijd in seconden toe
-    df["Time"] = pd.to_datetime(df["Time"], format="%d/%m/%Y %H:%M:%S:%f")
+    df["Time"] = pd.to_datetime(df["Time"], format="%m/%d/%Y %H:%M:%S:%f")
     df["Time_seconds"] = (df["Time"] - df["Time"].iat[0]).apply(
         lambda x: x.total_seconds()
     )
@@ -200,7 +200,8 @@ def readDataSim(csvfile):
 
 def avgColumn(df):
     global colNames
-    cols = df[['101 (C)','103 (C)','105 (C)','106 (C)','107 (C)','108 (C)','109 (C)','110 (C)','111 (C)','114 (C)','115 (C)','118 (C)']]
+    # cols = df[['101 (C)','103 (C)','105 (C)','106 (C)','107 (C)','108 (C)','109 (C)','110 (C)','111 (C)','114 (C)','115 (C)','118 (C)']]
+    cols =df[['101 <00> (C)','103 <02> (C)','105 <04> (C)','106 <05> (C)','107 <06> (C)','108 <07> (C)','109 <08> (C)','110 <09> (C)','111 <10> (C)','112 <11Outside> (C)','113 <12> (C)','114 <13> (C)','115 <14> (C)','116 <15> (C)','118 <17> (C)','119 <18Outside> (C)']]
     # cols = df.iloc[:, 1:-1]
     # row_avg = cols.mean(axis=1)
     df['average'] = cols.mean(axis=1)
